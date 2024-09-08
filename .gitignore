@@ -1,0 +1,17 @@
+# compiled output
+/dist
+/tmp
+/out-tsc
+
+# terraform excludes
+*.tfstate
+*.tfstate.backup
+.terraform
+*.terraform.lock.hcl
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

@@ -1,8 +1,8 @@
 variable "ami_id" {
   description = "Value of ami ID"
   type        = string
-  # Ubuntu
-  default = "ami-0e86e20dae9224db8"
+  # Red Hat
+  default = "ami-0583d8c7a9c35822c"
 }
 
 variable "instance_name" {
@@ -15,4 +15,18 @@ variable "instance_type" {
   description = "Free AWS tier instance type"
   type        = string
   default     = "t2.micro"
+}
+
+variable "aws_key_pair" {
+  default = "~/aws/aws_keys/default-ec2.pem"
+}
+
+variable "instance_ssh_priv_key" {
+  type    = string
+  default = "~/.ssh/id_rsa"
+}
+
+variable "instance_ssh_public_key" {
+  type    = string
+  default = "~/.ssh/id_rsa.pub"
 }

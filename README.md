@@ -11,7 +11,7 @@ This project creates an EC2 instance with Prometheus installed
 
 # Steps
 
-1. Create a "Key Pair" in AWS EC2 instance in PEM format
+1. Create a "Key Pair" in AWS EC2 instance in PEM format and name it "default-ec2"
 2. Download the ssh key
 3. Create a directory in your local machine to store the key 
 ```

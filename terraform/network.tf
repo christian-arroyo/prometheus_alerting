@@ -67,6 +67,14 @@ resource "aws_vpc_security_group_ingress_rule" "allow_prometheus" {
   to_port           = 9090
 }
 
+resource "aws_vpc_security_group_ingress_rule" "allow_alertmanager" {
+  security_group_id = aws_security_group.allow_service_ports_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 9093
+  ip_protocol       = "tcp"
+  to_port           = 9093
+}
+
 resource "aws_vpc_security_group_ingress_rule" "allow_http" {
   security_group_id = aws_security_group.allow_service_ports_sg.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -83,6 +91,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_https" {
   to_port           = 443
 }
 
+# This is needed so we can ping the ec2 instance
 resource "aws_vpc_security_group_ingress_rule" "allow_icmp" {
   security_group_id = aws_security_group.allow_service_ports_sg.id
   cidr_ipv4         = "0.0.0.0/0"

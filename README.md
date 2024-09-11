@@ -1,5 +1,5 @@
-# Work In Progress
-This project creates an EC2 instance with Prometheus installed. I am running these commands on a Mac.
+# Description Work In Progress
+This project creates a new EC2 instance using Terraform. AWS resouces will be created: VPC, private subnet, gateway, configured groups
 
 # Prerequisites
 
@@ -8,8 +8,12 @@ This project creates an EC2 instance with Prometheus installed. I am running the
 pip3 install ansible==9.9.0
 brew install gnu-tar
 - Have an AWS account and IAM user with access keys
-- Create a Slack channel and install "WebHooks" Slack app to the created channel
 - Create a key pair in AWS portal
+
+# Slack
+- Create a Slack channel and install "WebHooks" Slack app to the created channel
+1. Create an incoming webhook
+
 
 # Steps
 
@@ -59,6 +63,16 @@ cd /Applications/Python\ 3.12/
 
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
+# Stress machine
+
+1. SSH into the created EC2 instance and run this command
+
+```
+for i in 1; do while : ; do : ; done & done
+for i in 1 2 3 4; do while : ; do : ; done & done
+```
+This command will start an endless loop with command instruction ( : )
+
 # Terraform
 1. Set up Virtual Private Cloud (VPC)
 2. Set up Subnet
@@ -83,6 +97,7 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 https://mdl.library.utoronto.ca/technology/tutorials/generating-ssh-key-pairs-mac
 https://hvalls.dev/posts/prometheus-grafana-server
 https://medium.com/@krishabh080/prometheus-alert-manager-setup-and-alert-configurations-slack-800f6bb5111e
+https://grafana.com/blog/2020/02/25/step-by-step-guide-to-setting-up-prometheus-alertmanager-with-slack-pagerduty-and-gmail/#how-to-set-up-slack-alerts
 
 ### Issues found during development
 https://github.com/ansible/ansible/issues/32499

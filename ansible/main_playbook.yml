@@ -1,8 +1,38 @@
 - hosts: all
   become: true
-  tasks:
-  - name: Install Zip
-    package:
-      name: "{{ packages }}"
   roles:
     - role: prometheus
+    - role: alertmanager
+    - role: node_exporter
+  vars:
+    alertmanager_version: latest
+    alertmanager_slack_api_url: "<slack_url>"
+    alertmanager_receivers:
+      - name: slack
+        slack_configs:
+          - send_resolved: true
+            channel: '#devops'
+            title: "CPU Usage high"
+    alertmanager_route:
+      group_by: ['...']
+      group_wait: 10s
+      group_interval: 30s
+      repeat_interval: 30s
+      receiver: slack
+    prometheus_alertmanager_config:
+      - scheme: http
+        static_configs:
+          - targets: ["127.0.0.1:9093"]
+    prometheus_targets:
+      node:
+      - targets:
+        - localhost:9100
+    prometheus_alert_rules:
+      - alert: HostHighCpuLoad
+        expr: (sum by (instance) (avg by (mode, instance) (rate(node_cpu_seconds_total{mode!="idle"}[2m]))) > 0.8) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: Host high CPU load
+          description: "CPU load is > 80%"

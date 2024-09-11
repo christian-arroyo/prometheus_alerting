@@ -1,10 +1,12 @@
 # Work In Progress
-This project creates an EC2 instance with Prometheus installed
+This project creates an EC2 instance with Prometheus installed. I am running these commands on a Mac.
 
 # Prerequisites
 
 - Install Terraform - https://developer.hashicorp.com/terraform/install
 - Install Ansible - https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+pip3 install ansible==9.9.0
+brew install gnu-tar
 - Have an AWS account and IAM user with access keys
 - Create a Slack channel and install "WebHooks" Slack app to the created channel
 - Create a key pair in AWS portal
@@ -38,8 +40,24 @@ terraform init
 terraform plan
 terraform apply
 ```
-9. Add public IP address from output into ansible/inventory.ini
+### Install Prometheus using Ansible
 
+9. Add public IP address from output into ansible/inventory.ini
+Note: This step will be automated in the future
+
+10. Download Prometheus Ansible Collection with Ansible Galaxy. Which includes prometheus-core and prometheus-alertmanager Ansible roles)using Ansible Galaxy
+
+```
+nsible-galaxy collection install prometheus.prometheus
+```
+
+Note: If you get an error about an SSL certificate validation failure, execute these commands
+```
+cd /Applications/Python\ 3.12/
+./Install\ Certificates.command
+```
+
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # Terraform
 1. Set up Virtual Private Cloud (VPC)
@@ -51,8 +69,8 @@ terraform apply
 7. Set up Key Pair
 
 # Ansible
-1. Install Prometheus
-2. Set up alertmanager yml file
+1. Install Prometheus using collections
+2. Set up alertmanager yml file using collections
 
 # Slack
 1. Create slack channel
@@ -65,3 +83,7 @@ terraform apply
 https://mdl.library.utoronto.ca/technology/tutorials/generating-ssh-key-pairs-mac
 https://hvalls.dev/posts/prometheus-grafana-server
 https://medium.com/@krishabh080/prometheus-alert-manager-setup-and-alert-configurations-slack-800f6bb5111e
+
+### Issues found during development
+https://github.com/ansible/ansible/issues/32499
+https://stackoverflow.com/questions/54528115/unable-to-extract-tar-file-though-ansible-unarchive-module-in-macos

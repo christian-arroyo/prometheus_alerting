@@ -127,6 +127,13 @@ terraform destroy
 ![Alt text](https://github.com/christian-arroyo/prometheus_alerting/blob/main/screenshots/am.png?raw=true)
 ![Alt text](https://github.com/christian-arroyo/prometheus_alerting/blob/main/screenshots/slack.png?raw=true)
 
+### Improvement ideas
+- Move Ansible variables to a variables file
+- Reformat Slack message to include more details about the alert
+- Have Terraform auto-populate IP address into ansible_hosts file
+- Have Terraform execute Ansible main playbook
+
 ### Issues found during development 
 - https://github.com/ansible/ansible/issues/32499
 - https://stackoverflow.com/questions/54528115/unable-to-extract-tar-file-though-ansible-unarchive-module-in-macos
+

@@ -82,7 +82,7 @@ echo <IP> >> ../ansible/ansible_hosts
 ```
 alertmanager_slack_api_url: "<slack_url>"
 # example:
-alertmanager_slack_api_url: "https://hooks.slack.com/services/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"
+alertmanager_slack_api_url: "https://hooks.slack.com/services/XXXXXX/XXXXXXXXXXXXxxXxXXxXXXxx"
 ```
 11. Execute
 ```

@@ -1,6 +1,6 @@
 # Project Description
 
-The purpose of this project is to set up a server with Prometheus Server, Alert Manager, and Node Export, and trigger a High CPU alert to a slack channel if CPU% > 85%.
+The purpose of this project is to set up a server with Prometheus Server, Alert Manager, and Node Exporter, and trigger a High CPU alert to a slack channel if CPU% > 85%.
 
 This project will perform the following actions:
 
@@ -25,11 +25,13 @@ These resources will be created in AWS:
 - [Create an incoming webhook](https://api.slack.com/messaging/webhooks), and save your webhook URL, you will need it later
 - Have an AWS account and IAM user with access keys
 - If using a Mac, install gnu-tar, which is required for using Prometheus Ansible Roles. Add it to yout path
-    - brew install gnu-tar
+    -   ```
+        brew install gnu-tar
+        ```
         ```
         export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH" export MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
         ```
-    - If executing from a Max, also run this command (this will prevent hitting [this issue](https://github.com/ansible/ansible/issues/32499)):
+    - If executing from a Mac, also run this command (this will prevent hitting [this issue](https://github.com/ansible/ansible/issues/32499)):
         ```
         export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
         ```
@@ -72,25 +74,24 @@ terraform init
 terraform plan
 terraform apply
 ```
-Answer 'yes' to prompt
 10. Add public IP address from the last line of your stdout into /prometheus_alerting/ansible/ansible_hosts, under `[ec2]`
 ```
 # Replace <IP> bellow with IP address
 echo <IP> >> ../ansible/ansible_hosts
 ```
-12. Edit `~/prometheus_alerting/ansible/main_playbook.yml` and enter your Webhook URL:
+11. Edit `~/prometheus_alerting/ansible/main_playbook.yml` and enter your Webhook URL:
 ```
 alertmanager_slack_api_url: "<slack_url>"
 # example:
 alertmanager_slack_api_url: "https://hooks.slack.com/services/XXXXXX/XXXXXXXXXXXXxxXxXXxXXXxx"
 ```
-11. Execute
+12. Execute
 ```
 cd ~/prometheus_alerting/ansible
 ansible-playbook main_playbook.yml
 ```
 
-12. Verify there are no failures
+13. Verify there are no failures
 
 # Stress machine
 

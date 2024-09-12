@@ -77,6 +77,7 @@ Answer 'yes' to prompt
 ```
 # Replace <IP> bellow with IP address
 echo <IP> >> ../ansible/ansible_hosts
+```
 12. Edit `~/prometheus_alerting/ansible/main_playbook.yml` and enter your Webhook URL:
 ```
 alertmanager_slack_api_url: "<slack_url>"

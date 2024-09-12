@@ -111,7 +111,7 @@ for i in 1 2 3 4; do while : ; do : ; done & done
 - http://<ec2_ip_address>:9090 
 - http://<ec2_ip_address>:9093 
 
-Note: Once the alert goes through, it will be posted in the #devops channel of your slack istance in ~4 minutes. If you kill the process after 
+Note: Once the alert goes through, it will be posted in the #devops channel of your slack istance in ~4 minutes. If you kill the process after the slack message was sent, a green (healthy) slack message will be sent since the system is not experiencing that issue anymore. 
 
 7. Destroy your resources, answer 'yes' to prompt
 ```
@@ -121,11 +121,11 @@ terraform destroy
 
 ### Alerts
 
-![Pending alert](https://github.com/christian-arroyo/prometheus_alerting/screenshots/pending.png)
-![Firing alert](https://github.com/christian-arroyo/prometheus_alerting/screenshots/firing.png)
-![Alert Manager alert](https://github.com/christian-arroyo/prometheus_alerting/screenshots/am.png)
-![Slack message](https://github.com/christian-arroyo/prometheus_alerting/screenshots/slack.png)
+![Alt text](https://github.com/christian-arroyo/prometheus_alerting/blob/main/screenshots/pending.png?raw=true)
+![Alt text](https://github.com/christian-arroyo/prometheus_alerting/blob/main/screenshots/firing.png?raw=true)
+![Alt text](https://github.com/christian-arroyo/prometheus_alerting/blob/main/screenshots/am.png?raw=true)
+![Alt text](https://github.com/christian-arroyo/prometheus_alerting/blob/main/screenshots/slack.png?raw=true)
 
-### Issues found during development
+### Issues found during development 
 - https://github.com/ansible/ansible/issues/32499
 - https://stackoverflow.com/questions/54528115/unable-to-extract-tar-file-though-ansible-unarchive-module-in-macos

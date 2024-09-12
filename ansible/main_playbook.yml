@@ -6,13 +6,13 @@
     - role: node_exporter
   vars:
     alertmanager_version: latest
-    alertmanager_slack_api_url: "<slack_url>"
+    alertmanager_slack_api_url: ""
     alertmanager_receivers:
       - name: slack
         slack_configs:
           - send_resolved: true
             channel: '#devops'
-            title: "CPU Usage high"
+            title: "CPU usage is above the threshhold: 85%"
     alertmanager_route:
       group_by: ['...']
       group_wait: 10s
@@ -29,7 +29,7 @@
         - localhost:9100
     prometheus_alert_rules:
       - alert: HostHighCpuLoad
-        expr: (sum by (instance) (avg by (mode, instance) (rate(node_cpu_seconds_total{mode!="idle"}[2m]))) > 0.8) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
+        expr: (sum by (instance) (avg by (mode, instance) (rate(node_cpu_seconds_total{mode!="idle"}[2m]))) > 0.85) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
         for: 1m
         labels:
           severity: warning

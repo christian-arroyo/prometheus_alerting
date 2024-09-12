@@ -29,6 +29,10 @@ These resources will be created in AWS:
         ```
         export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH" export MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
         ```
+    - If executing from a Max, also run this command (this will prevent hitting [this issue](https://github.com/ansible/ansible/issues/32499)):
+        ```
+        export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+        ```
 
 - Create a Slack channel and install "WebHooks" Slack app to the created channel
 
@@ -46,11 +50,11 @@ mkdir -p ~/aws/aws_keys
 ```
 mv default-ec2.pem  ~/aws/aws_keys/
 ```
-5. Make sure premissions are 400 on PEM file
+5. Make sure permissions are 400 on PEM file
 ```
 $ chmod 400 ~/aws/aws_keys/default-ec2.pem
 ```
-6. Create access and secret keys env variables to be used by Terraform. Obtain both key values from one of your IAM users from your IAM service in AWS
+6. Create access and secret keys environment variables to be used by Terraform. Obtain both key values from one of your IAM users from your IAM service in AWS. [More details](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-envvars.html)
 ```
 export AWS_ACCESS_KEY_ID=<access_key>
 export AWS_SECRET_ACCESS_KEY=<secret_access_key>
@@ -61,17 +65,27 @@ git clone https://github.com/christian-arroyo/prometheus_alerting.git
 ```
 
 8. If you want to use a different OS image, change AMI ID in `/prometheus_alerting/terraform/variables`
-9. Execute 
+9. Execute the following commands, answer 'yes' to prompt
 ```
 cd ~/prometheus_alerting/terraform
 terraform init
 terraform plan
 terraform apply
 ```
-10. Add public IP address from stdout into /prometheus_alerting/ansible/ansible_hosts, under `[ec2]`
+Answer 'yes' to prompt
+10. Add public IP address from the last line of your stdout into /prometheus_alerting/ansible/ansible_hosts, under `[ec2]`
+```
+# Replace <IP> bellow with IP address
+echo <IP> >> ../ansible/ansible_hosts
+12. Edit `~/prometheus_alerting/ansible/main_playbook.yml` and enter your Webhook URL:
+```
+alertmanager_slack_api_url: "<slack_url>"
+# example:
+alertmanager_slack_api_url: "https://hooks.slack.com/services/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"
+```
 11. Execute
 ```
-cd ../ansible
+cd ~/prometheus_alerting/ansible
 ansible-playbook main_playbook.yml
 ```
 
@@ -84,33 +98,33 @@ ansible-playbook main_playbook.yml
 ssh -i ~/aws/aws_keys/default-ec2.pen ec2-user@<ip_address>
 ```
 2. Check how many CPUs your EC2 instance has with `lscpu`
-3. Run one of the following commands, depending how many CPUs your system has
+3. Run one of the following commands, depending how many CPUs your systestem has. line1 for 1 CPU, line2 for 2 CPUs, line3 for 4CPUs. This command will start an endless loop with command instruction ( : )
 ```
 for i in 1; do while : ; do : ; done & done
 for i in 1 2; do while : ; do : ; done & done
 for i in 1 2 3 4; do while : ; do : ; done & done
 ```
-This command will start an endless loop with command instruction ( : )
 
-4. Run top, and make sure your CPU usage is over 85%
+4. Run top, and make sure the process CPU usage is over 85%
 5. Wait a few minutes, you can monitor your alerts in the following Prometheus Pages:
 - http://<ec2_ip_address>:9090 
 - http://<ec2_ip_address>:9093 
 
-6. Once the alert goes through, it will be posted in the #devops channel of your slack istance
-7. Destroy your resources
+Note: Once the alert goes through, it will be posted in the #devops channel of your slack istance in ~4 minutes. If you kill the process after 
+
+7. Destroy your resources, answer 'yes' to prompt
 ```
 cd ~/prometheus_alerting/terraform
 terraform destroy
 ```
 
-### Issues found during development
-https://github.com/ansible/ansible/issues/32499
-https://stackoverflow.com/questions/54528115/unable-to-extract-tar-file-though-ansible-unarchive-module-in-macos
+### Alerts
 
-export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-Note: If you get an error about an SSL certificate validation failure, execute these commands
-```
-cd /Applications/Python\ 3.12/
-./Install\ Certificates.command
-```
+![Pending alert](https://github.com/christian-arroyo/prometheus_alerting/screenshots/pending.png)
+![Firing alert](https://github.com/christian-arroyo/prometheus_alerting/screenshots/firing.png)
+![Alert Manager alert](https://github.com/christian-arroyo/prometheus_alerting/screenshots/am.png)
+![Slack message](https://github.com/christian-arroyo/prometheus_alerting/screenshots/slack.png)
+
+### Issues found during development
+- https://github.com/ansible/ansible/issues/32499
+- https://stackoverflow.com/questions/54528115/unable-to-extract-tar-file-though-ansible-unarchive-module-in-macos

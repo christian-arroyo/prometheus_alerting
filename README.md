@@ -1,8 +1,10 @@
 # Project Description
 
+The purpose of this project is to set up a server with Prometheus Server, Alert Manager, and Node Export, and trigger a High CPU alert to a slack channel if CPU% > 85%.
+
 This project will perform the following actions:
 
-1. Create an EC2 instance and the needed networking services
+1. Create an EC2 instance and the needed networking services with Terraform
 2. Execute an Ansible playbook, which will then trigger the installation of three services, using Ansible Community Roles: Prometheus server, Prometheus Node Exporter, and Prometheus Alert Manager
 3. Trigger a High-CPU alert, which will then be sent to a Slack Channel via Slack Webhooks
 
@@ -29,7 +31,6 @@ These resources will be created in AWS:
         ```
 
 - Create a Slack channel and install "WebHooks" Slack app to the created channel
-1. Create an incoming webhook
 
 
 # Steps

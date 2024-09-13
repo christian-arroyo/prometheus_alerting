@@ -36,8 +36,6 @@ These resources will be created in AWS:
         export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
         ```
 
-- Create a Slack channel and install "WebHooks" Slack app to the created channel
-
 
 # Steps
 
